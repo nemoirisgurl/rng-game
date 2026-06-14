@@ -23,6 +23,7 @@ GET_USERNAME() {
     then
       # insert new user name
       INSERT_USERNAME_RESULT=$($PSQL "INSERT INTO users(name) VALUES ('$USERNAME')")
+      USER_ID=$($PSQL "SELECT user_id FROM users WHERE name = '$USERNAME'")
       # welcome
       echo Welcome, $USERNAME! It looks like this is your first time here.
     else
@@ -53,6 +54,7 @@ GAME() {
       GAME "\nIt's higher than that, guess again: "
     else
       echo -e "\nYou guessed it in $(( TIME_GUESSED + 1 )) tries. The secret number was $RN. Nice job!"
+      UPDATE_USER_RESULT=$($PSQL "UPDATE users SET game_count = game_count + 1, best_game_guesses = LEAST(best_game_guesses,$TIME_GUESSED) WHERE user_id = $USER_ID")
     fi
   else
     # ask to guess valid number
