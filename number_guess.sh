@@ -31,6 +31,10 @@ GET_USERNAME() {
       USER_HISTORY=$($PSQL "SELECT game_count, best_game_guesses FROM users WHERE name = '$USERNAME'")
       IFS="|" read GAMES BEST_RECORD <<< "$USER_HISTORY"
       # welcome back
+      if [[ -z "$BEST_RECORD" || "$BEST_RECORD" -eq 999999 ]]
+      then
+        BEST_RECORD=0
+      fi
       echo "Welcome back, $USERNAME! You have played $GAMES games, and your best game took $BEST_RECORD guesses."
     fi
   fi 
