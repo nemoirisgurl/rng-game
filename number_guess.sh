@@ -16,15 +16,7 @@ GET_USERNAME() {
     GET_USERNAME 
   else
     # get user id
-<<<<<<< HEAD
-<<<<<<< HEAD
     USER_ID=$($PSQL "SELECT user_id FROM users WHERE name = '$USERNAME'")
-=======
-    USER_IDT=$($PSQL "SELECT user_id FROM users WHERE name = '$USERNAME'")
->>>>>>> f8a0366... append users
-=======
-    USER_ID=$($PSQL "SELECT user_id FROM users WHERE name = '$USERNAME'")
->>>>>>> e4b75d7... save user data
     # if not found
     if [[ -z "$USER_ID" ]]
     then
@@ -32,25 +24,12 @@ GET_USERNAME() {
       INSERT_USERNAME_RESULT=$($PSQL "INSERT INTO users(name) VALUES ('$USERNAME')")
       # welcome
       echo Welcome, $USERNAME! It looks like this is your first time here.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e4b75d7... save user data
     else
       # get history
       USER_HISTORY=$($PSQL "SELECT game_count, best_game_guesses FROM users WHERE name = '$USERNAME'")
       IFS="|" read GAMES BEST_RECORD <<< "$USER_HISTORY"
       # welcome back
-<<<<<<< HEAD
-      echo Welcome back, $USERNAME! You have played $GAMES games, and your best game took $BEST_RECORD guesses.
-<<<<<<< HEAD
-=======
->>>>>>> f8a0366... append users
-=======
->>>>>>> e4b75d7... save user data
-=======
       echo "Welcome back, $USERNAME! You have played $GAMES games, and your best game took $BEST_RECORD guesses."
->>>>>>> 1258fda... fix: fix phrase
     fi
   fi 
 }
