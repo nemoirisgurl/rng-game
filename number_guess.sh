@@ -4,6 +4,7 @@ DB_USER="freecodecamp"
 DB_NAME="postgres"
 PSQL="psql -U $DB_USER --d $DB_NAME -t -A -c"
 RN=$(( 1 + $RANDOM % 1000 ))
+TIME_GUESSED=0
 
 GET_USERNAME() {
   # get username
@@ -42,7 +43,17 @@ GAME() {
   if [[ ($GUESS -ge 1 || $GUESS -le 1000) && $GUESS =~ ^[0-9]+$ ]]
   then
     # give hints
-    echo $RN
+    if (( GUESS > $RN ))
+    then
+      TIME_GUESSED=$(( TIME_GUESSED + 1 ))
+      GAME "\nIt's lower than that, guess again: "
+    elif (( GUESS < $RN )) 
+    then
+      TIME_GUESSED=$(( TIME_GUESSED + 1 ))
+      GAME "\nIt's higher than that, guess again: "
+    else
+      echo -e "\nYou guessed it in $(( TIME_GUESSED + 1 )) tries. The secret number was $RN. Nice job!"
+    fi
   else
     # ask to guess valid number
     GAME "\nThat is not an integer, guess again:"
