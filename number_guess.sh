@@ -34,4 +34,20 @@ GET_USERNAME() {
   fi 
 }
 
+GAME() {
+  # start game
+  echo -e $1
+  read GUESS
+  # if integer between 1-1000
+  if [[ ($GUESS -ge 1 || $GUESS -le 1000) && $GUESS =~ ^[0-9]+$ ]]
+  then
+    # give hints
+    echo $RN
+  else
+    # ask to guess valid number
+    GAME "\nThat is not an integer, guess again:"
+  fi
+}
+
 GET_USERNAME
+GAME "\nGuess the secret number between 1 and 1000:"
