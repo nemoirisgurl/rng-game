@@ -41,12 +41,16 @@ GET_USERNAME() {
       USER_HISTORY=$($PSQL "SELECT game_count, best_game_guesses FROM users WHERE name = '$USERNAME'")
       IFS="|" read GAMES BEST_RECORD <<< "$USER_HISTORY"
       # welcome back
+<<<<<<< HEAD
       echo Welcome back, $USERNAME! You have played $GAMES games, and your best game took $BEST_RECORD guesses.
 <<<<<<< HEAD
 =======
 >>>>>>> f8a0366... append users
 =======
 >>>>>>> e4b75d7... save user data
+=======
+      echo "Welcome back, $USERNAME! You have played $GAMES games, and your best game took $BEST_RECORD guesses."
+>>>>>>> 1258fda... fix: fix phrase
     fi
   fi 
 }
