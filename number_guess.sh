@@ -43,17 +43,16 @@ GAME() {
   # if integer between 1-1000
   if [[ ($GUESS -ge 1 || $GUESS -le 1000) && $GUESS =~ ^[0-9]+$ ]]
   then
+    TIME_GUESSED=$(( TIME_GUESSED + 1 ))
     # give hints
     if (( GUESS > $RN ))
     then
-      TIME_GUESSED=$(( TIME_GUESSED + 1 ))
       GAME "\nIt's lower than that, guess again: "
     elif (( GUESS < $RN )) 
     then
-      TIME_GUESSED=$(( TIME_GUESSED + 1 ))
       GAME "\nIt's higher than that, guess again: "
     else
-      echo -e "\nYou guessed it in $(( TIME_GUESSED + 1 )) tries. The secret number was $RN. Nice job!"
+      echo -e "\nYou guessed it in $(( TIME_GUESSED )) tries. The secret number was $RN. Nice job!"
       UPDATE_USER_RESULT=$($PSQL "UPDATE users SET game_count = game_count + 1, best_game_guesses = LEAST(best_game_guesses,$TIME_GUESSED) WHERE user_id = $USER_ID")
     fi
   else
