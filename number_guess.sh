@@ -14,6 +14,17 @@ GET_USERNAME() {
   then
     # prompt again
     GET_USERNAME 
+  else
+    # get user id
+    USER_IDT=$($PSQL "SELECT user_id FROM users WHERE name = '$USERNAME'")
+    # if not found
+    if [[ -z "$USER_ID" ]]
+    then
+      # insert new user name
+      INSERT_USERNAME_RESULT=$($PSQL "INSERT INTO users(name) VALUES ('$USERNAME')")
+      # welcome
+      echo Welcome, $USERNAME! It looks like this is your first time here.
+    fi
   fi 
 }
 
